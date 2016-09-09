@@ -1,0 +1,313 @@
+
+<html>
+<head>
+<script language="javascript">
+
+function unichr(hex) {
+  return eval('"'+"\\u"+hex+'"');
+}
+
+function transWord(word) {
+  switch(word) {
+    case '': return '';
+    case 'om':   return unichr("0F68")+unichr("0F82");
+    case 'hum':  return unichr("0F67")+unichr("0F74")+unichr("0F82");
+  }
+
+  if (word=='') return '';
+
+  word=word+"?";
+  var ddot=word.indexOf('.');
+  if (ddot>=0) {
+    return transWord(word.slice(0,ddot))+transWord(word.slice(ddot+1,-1));
+  }
+
+  for (index in word) {
+    switch( word[index] ) {
+      case 'a': case 'i': case 'u': case 'e': case 'o':
+        return transWordBegin(word.slice(0,index))
+             + transWordEnd(word.slice(index,-1));
+    }
+  }
+  return transWordBegin(word.slice(0,-1));
+}
+
+function transWordBegin(word,followingSubscript){
+  if (word.length > 1) {
+    if ( word[word.length-1] == 'r' ) {
+      if ( followingSubscript == 'l' ) {
+        return transWordBegin(word.slice(0,-1),'r')+unichr("0F62");
+      } else {
+        return transWordBegin(word.slice(0,-1),'r')+unichr("0FB2");
+      }
+    }
+    if ( word[word.length-1] == 'l' )
+      return transWordBegin(word.slice(0,-1),'l')+unichr("0FB3");
+    if ( (word[word.length-1] == 'y') && (word[word.length-2] != 'n') )
+      return transWordBegin(word.slice(0,-1),'r')+unichr("0FB1");
+    if ( word[word.length-1] == 'w' )
+      return transWordBegin(word.slice(0,-1),'r')+unichr("0FAD");
+    wordy=word+'?'
+    if ( (word[0] == 'd') && (word[1] != 'z') )
+      return unichr("0F51")+transWordBegin(wordy.slice(1,-1),'');
+    if ( word[0] == 'g' )
+      return unichr("0F42")+transWordBegin(wordy.slice(1,-1),'');
+    if ( word[0] == 'b' )
+      return unichr("0F56")+transWordBegin(wordy.slice(1,-1),'');
+    if ( word[0] == 'm' )
+      return unichr("0F58")+transWordBegin(wordy.slice(1,-1),'');
+    if ( word[0] == "'" )
+      return unichr("0F60")+transWordBegin(wordy.slice(1,-1),'');
+    if ( word[0] == 's' ) {
+      if ( word == 'sh') return unichr("0F64");
+      return unichr("0F66")+subscribe(wordy.slice(1,-1));
+    }
+    if ( word[0] == 'r' )
+      return unichr("0F62")+subscribe(wordy.slice(1,-1));
+    if ( word[0] == 'l' )
+      return unichr("0F63")+subscribe(wordy.slice(1,-1));
+  }
+  switch ( word ) {
+    case 'k':  return unichr("0F40");
+    case 'kh': return unichr("0F41");
+    case 'g':  return unichr("0F42");
+    case 'ng': return unichr("0F44");
+
+    case 'c':  return unichr("0F45");
+    case 'ch': return unichr("0F46");
+    case 'j':  return unichr("0F47");
+    case 'ny': return unichr("0F49");
+
+    case 'T':  return unichr("0F4A");
+    case 'Th': return unichr("0F4B");
+    case 'D':  return unichr("0F4C");
+    case 'N':  return unichr("0F4E");
+
+    case 't':  return unichr("0F4F");
+    case 'th': return unichr("0F50");
+    case 'd':  return unichr("0F51");
+    case 'n':  return unichr("0F53");
+
+    case 'p':  return unichr("0F54");
+    case 'ph': return unichr("0F55");
+    case 'b':  return unichr("0F56");
+    case 'm':  return unichr("0F58");
+
+    case 'ts':  return unichr("0F59");
+    case 'tsh': return unichr("0F5A");
+    case 'dz':  return unichr("0F5B");
+    case 'w':   return unichr("0F5D");
+
+    case 'zh': return unichr("0F5E");
+    case 'z':  return unichr("0F5F");
+    case "'":  return unichr("0F60");
+    case 'y':  return unichr("0F61");
+
+    case 'r':  return unichr("0F62");
+    case 'l':  return unichr("0F63");
+    case 'Sh':  return unichr("0F65");
+    case 's':  return unichr("0F66");
+    case 'h':  return unichr("0F67");
+
+  }
+  return unichr("0F68");
+}
+
+function subscribe(word){
+  switch ( word ) {
+    case 'k':  return unichr("0F90");
+    case 'kh': return unichr("0F91");
+    case 'g':  return unichr("0F92");
+    case 'ng': return unichr("0F94");
+
+    case 'c':  return unichr("0F95");
+    case 'ch': return unichr("0F96");
+    case 'j':  return unichr("0F97");
+    case 'ny': return unichr("0F99");
+
+    case 'T':  return unichr("0F9A");
+    case 'Th': return unichr("0F9B");
+    case 'D':  return unichr("0F9C");
+    case 'N':  return unichr("0F9E");
+
+    case 't':  return unichr("0F9F");
+    case 'th': return unichr("0FA0");
+    case 'd':  return unichr("0FA1");
+    case 'n':  return unichr("0FA3");
+
+    case 'p':  return unichr("0FA4");
+    case 'ph': return unichr("0FA5");
+    case 'b':  return unichr("0FA6");
+    case 'm':  return unichr("0FA8");
+
+    case 'ts':  return unichr("0FA9");
+    case 'tsh': return unichr("0FAA");
+    case 'dz':  return unichr("0FAB");
+    case 'w':   return unichr("0FAD");
+
+    case 'zh': return unichr("0FAE");
+    case 'z':  return unichr("0FAF");
+    case "'":  return unichr("0FB0");
+    case 'y':  return unichr("0FB1");
+
+    case 'r':  return unichr("0FB2");
+    case 'l':  return unichr("0FB3");
+    case 'sh': return unichr("0FB4");
+    case 'Sh': return unichr("0FB5");
+    case 's':  return unichr("0FB6");
+    case 'h':  return unichr("0FB7");
+  }
+  return unichr("0FB8");
+}
+
+function transWordEnd(word){
+  if (word=='') { return word; }
+  word=word+"?";
+  output=''
+  switch( word[0] ) {
+    case 'i': output+=unichr("0F72"); break;
+    case 'u': output+=unichr("0F74"); break;
+    case 'e': output+=unichr("0F7A"); break;
+    case 'o': output+=unichr("0F7C"); break;
+    case 'g': output+=unichr("0F42"); break;
+    case 'b': output+=unichr("0F56"); break;
+    case 'd': output+=unichr("0F51");
+      if (word[1]=='m') return output+unichr("0FA8")+transWordEnd(word.slice(2,-1));
+      break;
+    case 'l': output+=unichr("0F63"); break;
+    case 'm': output+=unichr("0F58"); break;
+    case 'h': output+=unichr("0FB0"); break;
+    case 'n':
+      if (word[1]=='g') {
+        return unichr("0F44")+transWordEnd(word.slice(2,-1));
+      } else {
+        output+=unichr("0F53"); break;
+      }
+    case 's': output+=unichr("0F66"); break;
+    case 'r': output+=unichr("0F62"); break;
+    case "'": output+=unichr("0F60"); break;
+    case '/': output+=unichr("0F0D"); break;
+  }
+  return output+transWordEnd(word.slice(1,-1));
+}
+
+
+function transliterate() {
+
+var tibetan   = document.getElementById("tibetan");
+var htmlentity = document.getElementById("htmlentity");
+var input = document.getElementById("input").value+' ';
+var breaks= document.getElementById("breaks").checked;
+
+output = ' ';
+htmloutput = '';
+urloutput = '';
+word = '';
+hasShad = 0;
+
+for (index in input) {
+  theChar=input.charAt(index);
+  if  ( (theChar>="A") && (theChar<="z") || (theChar==".") || (theChar=="'") ) {
+    word+=theChar;
+  } else {
+    if (theChar=="/") {
+      hasShad = 1;
+      word+=theChar;
+    } else {
+      if (word!='') {
+        if (hasShad) {
+          output+=transWord(word)+" ";
+        } else {
+          output+=transWord(word)+unichr("0F0B");
+          if (breaks) { output+=unichr("200B"); }
+        }
+        word='';
+        hasShad=0;
+      }
+    }
+  }
+	}
+
+output+=transWord(word);
+
+output=output.replace(/^\s*/,''); // remove spaces
+output=output.replace(/\s*$/,'');
+
+tibetan.firstChild.nodeValue = output;
+
+for (index in input) {
+  theChar=output.charCodeAt(index);
+  if (theChar.toString()!="NaN") {
+    htmloutput+='&#'+theChar.toString()+';'+unichr("200B");
+  } else {
+    break; // utf-8 made the for loop count wrong
+  }
+}
+
+urloutput='http://bo.wikipedia.org/wiki/'+output;
+
+htmlentity.firstChild.nodeValue = htmloutput;
+tibetan.href = urloutput;
+
+}
+</script>
+<style type="text/css">
+
+body {font-family: Noto Sans Tibetan;}
+    
+div { margin: 0; padding: 0; }
+div.tibetan { 	
+    font-size: 14px;
+    border: 1px solid #ff7700;
+    height: 100px;
+    #overflow: scroll;
+    margin: 0.5em;
+    padding: 5px;
+    text-align: left;
+    }
+div.htmlentity { font-size: 8px; padding-top: 10px; }
+a { color: black; text-decoration: none; }
+a:hover { color: blue; text-decoration: overline; }
+div.input {	padding: 1em; }
+input#input { border-width: 0px 0px 2px 0px; border-color: black;
+font-size: 20px; margin: 0em 0.5em 0em 0.5em}
+
+div.instructions {	font-size: small; text-align: justify;
+                        padding: 4em; }
+    
+    textarea{
+             font: normal normal 14px sarchung;
+               width: 100%;  margin: 0; padding: 5; border-width: 2;
+            }
+</style>
+    
+    
+    
+<link href='http://fonts.googleapis.com/earlyaccess/notosanstibetan.css' rel='stylesheet' type='text/css'/>
+</head>
+
+<body>
+
+<div id="container" class="input" onkeyup="transliterate();" onchange="transliterate();">
+            <form>
+            Type Wylie<textarea id="input" size="50"></textarea>
+            <input type="checkbox" id="breaks" hidden="hidden">
+            </form>
+            </div>
+     
+           
+            <div class="tibetan">
+            <span  id="tibetan">
+            </span>
+            </div>
+            
+            
+
+                 </div>           
+        </div>
+<a href="http://www.thlib.org/reference/transliteration/teachingewts.pdf" target="_blank">Manual to type correct wylie PDF</a> or visit <a href="http://www.sonamdawa.com" target="_blank">www.sonamdawa.com</a>
+
+
+</body>
+
+</html>
