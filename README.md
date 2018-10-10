@@ -1,3 +1,4 @@
 # js-wylie
-wylie keyboard with javascript
-CHECK THE WORKING DEMO at https://www.sonamdawa.com/wylie.html
+wylie keyboard DEMO at https://www.sonamdawa.com/wylie.html
+
+Pure Tibetan syllables are fully supported by this script. Sanskrit clusters may not work correctly.
